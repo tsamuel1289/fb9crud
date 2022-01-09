@@ -53,18 +53,20 @@ function App() {
   const printDomingo = () => {
     let domObjects = []
     listadoIds.forEach( async (rr) => {
-      const rrstr = String(rr) 
+      const rrstr = toString(rr) 
       
       const docRef = doc(db, "domingo" , rrstr)
+      
       const docSnap = await getDoc(docRef)
       //domObjects.push(docSnap.data())
+      //console.log(docSnap.data())
 
-      if (docSnap.exists()) {
+     /* if (docSnap.exists()) {
         console.log("Document data:", docSnap.data());
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
-      }
+      }*/
 
 
       console.log(docSnap.data())

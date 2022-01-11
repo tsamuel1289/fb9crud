@@ -5,9 +5,9 @@ const db = getFirestore(firebaseApp)
 
 function App() {
   // USESTATES
-  const [cancionesDomingo, setCancionesDomingo] = useState([])
   const [listadoTotal, setListadoTotal] = useState([])
   const [toSave, setToSave] = useState(null)
+  const [cancionesDomingo, setCancionesDomingo] = useState([])
   
   const submitHandler = async (e) => {
     e.preventDefault()
@@ -35,35 +35,25 @@ function App() {
   
   const printDomingo = async () => {
     
-    const querySnapshot = await getDoc(doc(db, "domingo", "dom"))
-    let acuIds = []
-    acuIds = querySnapshot.data().array 
+    const arraySnapshot = await getDoc(doc(db, "domingo", "dom"))
+    let acuIds = arraySnapshot.data().array 
     
-    let acuSongs = []
     acuIds.forEach( async (rr) => {
       const docSnap = await getDoc(doc(db, "canciones", rr))
-      acuSongs.push(docSnap.data())
-    })
-    
-    setCancionesDomingo(acuSongs)
-    
-  }
-  useEffect( ()=> printDomingo(), []) 
-  const printQuery = async () => {
-    const querySnapshot = await getDoc(doc(db, "domingo", "dom"))
-    let acuIds = []
-    acuIds = querySnapshot.data().array
-    console.log(acuIds)
-    const q = query(collection(db, "canciones" ), where("Id","==", 'YfdxZ6in9XOo0oU723OE'))
-    const qSnapshot = await getDocs(q)
-    qSnapshot.forEach((kk)=>{
-      console.log(kk.data())
+      let nuevoObj = docSnap.data()
+      setCancionesDomingo([...cancionesDomingo, nuevoObj])
+      console.log(cancionesDomingo)
+      
+      //console.log(acuSongs)
       
     })
-
+    console.log(cancionesDomingo)
+    
+    
+    
   }
-  //useEffect( () => printQuery(), [])
-  
+  useEffect( ()=> {printDomingo()}, []) 
+    
   //GENERA LA LISTA DEL INICIO
   const inicioPag = async () => {
     //SOLO UN DOCUMENTO
@@ -83,12 +73,11 @@ function App() {
     setListadoTotal(docTotal) //lo guarda en el useState
     
   }
-  //useEffect(()=> inicioPag() , [])
+  useEffect(()=> inicioPag() , [])
 
   const ejecutar = () => {
     setDoc(doc(db, "domingo", "dom"), {array: []})
   }
-  
   //console.log(cancionesDomingo)
   return  (
     <div>
@@ -103,17 +92,20 @@ function App() {
 
       <hr />
 
-      <button onClick={ejecutar}>Ejecutar</button>
+      <button onClick={ejecutar}>Limpiar</button>
+      <button onClick={printDomingo}>mostrar</button>
+
+      <hr />
+      <hr />
       
-      {cancionesDomingo.map((yy)=> {
-        console.log(cancionesDomingo)
-        return(<div>{yy.titulo}</div>)
-      })}
-
-      <hr />
-      <hr />
-
-
+      {
+      cancionesDomingo.map((yy)=> {
+        
+        return(<div >{yy.titulo}</div>)
+      }) 
+      }
+      <hr /> <hr />
+      
       {listadoTotal.map((dd) => {
         
         return (<div key={dd.id}>

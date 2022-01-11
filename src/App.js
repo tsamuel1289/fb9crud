@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import firebaseApp from './credentials'
-import {getFirestore, collection, doc, setDoc , getDoc, getDocs} from 'firebase/firestore'
+import {getFirestore, collection, doc, setDoc , getDoc, getDocs, query, where} from 'firebase/firestore'
 const db = getFirestore(firebaseApp)
 
 function App() {
   // USESTATES
   const [cancionesDomingo, setCancionesDomingo] = useState([])
-  const [listadoIds, setListadoIds] = useState([])
   const [listadoTotal, setListadoTotal] = useState([])
   const [toSave, setToSave] = useState(null)
   
@@ -23,32 +22,47 @@ function App() {
     await setDoc(doc(cancionesRef), objFromForm)
   }
   
-  
-  const domingoRef = collection(db, 'domingo')
   const addToSun =  async (key) => {
-    await setDoc(doc(domingoRef) , {can: key} )
+    const querySnapshot = await getDoc(doc(db, "domingo", "dom"))
+    let actualArray = querySnapshot.data().array
+    actualArray.push(key)
+    let nuevoObj = {array: actualArray}
+    console.log(nuevoObj)
+    await setDoc(doc(db, "domingo", "dom"), nuevoObj )
   }
   
   //ADQUIRIR DATOS --------------------------------------------------
-  const getSoloDom = async () => {
-    const querySnapshot = await getDocs(collection(db, "domingo"))
-    querySnapshot.forEach((dd)=> {
-      setListadoIds(listadoIds.push(dd.data().can))
-    })
-  } 
+  
   const printDomingo = async () => {
-    await getSoloDom()
+    
+    const querySnapshot = await getDoc(doc(db, "domingo", "dom"))
+    let acuIds = []
+    acuIds = querySnapshot.data().array 
     
     let acuSongs = []
-    listadoIds.forEach( async (rr) => {
-      const docRef = doc(db, "canciones" , rr)
-      const docSnap = await getDoc(docRef)
+    acuIds.forEach( async (rr) => {
+      const docSnap = await getDoc(doc(db, "canciones", rr))
       acuSongs.push(docSnap.data())
     })
+    
     setCancionesDomingo(acuSongs)
+    
   }
   useEffect( ()=> printDomingo(), []) 
-  
+  const printQuery = async () => {
+    const querySnapshot = await getDoc(doc(db, "domingo", "dom"))
+    let acuIds = []
+    acuIds = querySnapshot.data().array
+    console.log(acuIds)
+    const q = query(collection(db, "canciones" ), where("Id","==", 'YfdxZ6in9XOo0oU723OE'))
+    const qSnapshot = await getDocs(q)
+    qSnapshot.forEach((kk)=>{
+      console.log(kk.data())
+      
+    })
+
+  }
+  //useEffect( () => printQuery(), [])
   
   //GENERA LA LISTA DEL INICIO
   const inicioPag = async () => {
@@ -71,39 +85,11 @@ function App() {
   }
   //useEffect(()=> inicioPag() , [])
 
-<<<<<<< HEAD
   const ejecutar = () => {
-    console.log(cancionesDomingo)
+    setDoc(doc(db, "domingo", "dom"), {array: []})
   }
   
-  const rep = () => {cancionesDomingo.map((yy) => {
-    console.log(yy.titulo)
-    return (<div>{yy.titulo}</div>)
-=======
-  const printDomingo = () => {
-    let domObjects = []
-    listadoIds.forEach( async (rr) => {
-      const rrstr = toString(rr) 
-      
-      const docRef = doc(db, "domingo" , rrstr)
-      
-      const docSnap = await getDoc(docRef)
-      //domObjects.push(docSnap.data())
-      //console.log(docSnap.data())
-
-     /* if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data());
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }*/
->>>>>>> ed316bdde6d081dd938132cfd3c5045f0045569d
-
-  })
-
-  }
-
-
+  //console.log(cancionesDomingo)
   return  (
     <div>
       <h1>Hola hola</h1>
@@ -119,9 +105,10 @@ function App() {
 
       <button onClick={ejecutar}>Ejecutar</button>
       
-      {setTimeout(rep, 1000)}
-      {console.log('count')}
-
+      {cancionesDomingo.map((yy)=> {
+        console.log(cancionesDomingo)
+        return(<div>{yy.titulo}</div>)
+      })}
 
       <hr />
       <hr />

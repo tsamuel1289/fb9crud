@@ -1,25 +1,27 @@
 import React from 'react';
+import './styles/style.scss'
+import { BrowserRouter , Routes, Route, Link } from 'react-router-dom';
+//COMPONENTES
 import Iniciopractica from './components/Iniciopractica'
 import Nuevohome from './components/Nuevohome'
-import { BrowserRouter as Router , Routes, Route, Link } from 'react-router-dom';
-
+import Navbar from './components/Navbar'
+import Contenido from './components/Contenido'
 
 function App() {
 
   
   return  (<>
-    <nav>
-        <Link to="/">Home</Link>
-        <Link to="practica">Practica</Link>
-    </nav>
-    <div>Esto esta afuera el Router</div>
-    <Router>
+    
+    <BrowserRouter>
+      <Navbar />
+      
       <Routes>
-        <Route path="/" element={<Nuevohome/>} />
+        <Route path="/" element={<Nuevohome/>} /> 
         <Route path="practica" element={<Iniciopractica/>} />
+        <Route path="contenido/:id" element={<Contenido/>} />
       </Routes>
 
-    </Router>
+    </BrowserRouter>
 
   </>);
 }

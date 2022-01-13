@@ -14,9 +14,12 @@ function Iniciopractica() {
     
     let titulo = e.target.titulo.value
     let artista = e.target.artista.value
-    let contenido = e.target.contenido.value
+    let bpm = e.target.bpm.value
+    let url = e.target.url.value
+    let letra = e.target.letra.value
+    let acordes = e.target.acordes.value
     
-    const objFromForm = { titulo, artista, contenido }
+    const objFromForm = { titulo, artista, bpm, url, letra, acordes }
     const cancionesRef = collection(db, 'canciones')
     setToSave(objFromForm)
     await setDoc(doc(cancionesRef), objFromForm)
@@ -70,7 +73,11 @@ function Iniciopractica() {
       <form onSubmit={submitHandler}>
         <input type="text" placeholder='Titulo' id='titulo' />
         <input type="text" placeholder='Artista' id='artista' />
-        <textarea placeholder='Contenido' id = 'contenido' name="" cols="30" rows="10">
+        <input type="number" placeholder='BPM' id='bpm' />
+        <input type="text" placeholder='URL' id='url' />
+        <textarea placeholder='Letra' id = 'letra' name="" cols="30" rows="10">
+        </textarea><br />
+        <textarea placeholder='Acordes' id = 'acordes' name="" cols="30" rows="10">
         </textarea><br />
         <button type='submit'>Guardar</button>
       </form>

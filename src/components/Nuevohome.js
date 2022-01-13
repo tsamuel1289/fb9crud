@@ -9,13 +9,11 @@ const db = getFirestore(firebaseApp)
 
 const Nuevohome = () => {
 
-    var noSleep = new NoSleep();
+    /*var noSleep = new NoSleep();
     document.addEventListener('click', function enableNoSleep() {
         document.removeEventListener('click', enableNoSleep, false);
         noSleep.enable();
-      }, false);
-
-    
+      }, false);*/
 
     // USESTATES
     const [dataDom, setDataDom] = useState([])
@@ -31,14 +29,18 @@ const Nuevohome = () => {
         })
     }
     useEffect( () => getDom(), [] )
-    
+
+    const enviarSong = (titulo, artista, bpm, url, letra, acordes) => {
+        const song = {titulo, artista, bpm, url, letra, acordes}
+        localStorage.setItem('song' , JSON.stringify(song))
+    }    
     
     return(<>
         {
             dataDom.map( (ss) => {
                 return(<>    
-                    <Link to = {`/contenido/${ss.id}`} style={{color: 'black' ,textDecoration: 'none'}}>
-                        <div key={ss.id} >
+                    <Link key={ss.id}  to = {'/contenido'} style={{color: 'black' ,textDecoration: 'none'}}>
+                        <div  onClick={() => enviarSong(ss.titulo, ss.artista, ss.bpm, ss.url, ss.letra, ss.acordes)}>
                             <b>{ss.titulo}</b><br /><small>{ss.artista}</small><hr />  
                         </div>
                     </Link> 

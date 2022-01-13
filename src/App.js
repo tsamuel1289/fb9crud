@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import './styles/style.scss'
 import { BrowserRouter , Routes, Route, Link } from 'react-router-dom';
 //COMPONENTES
@@ -8,7 +8,6 @@ import Navbar from './components/Navbar'
 import Contenido from './components/Contenido'
 
 function App() {
-
   
   return  (<>
     

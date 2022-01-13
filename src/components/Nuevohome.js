@@ -1,11 +1,21 @@
 import React , {useState, useEffect} from 'react'
+import NoSleep from 'nosleep.js'
 import firebaseApp from "../credentials"
 import {getFirestore, doc, getDoc} from 'firebase/firestore'
 import {Link} from 'react-router-dom'
+
 const db = getFirestore(firebaseApp)
 
 
 const Nuevohome = () => {
+
+    var noSleep = new NoSleep();
+    document.addEventListener('click', function enableNoSleep() {
+        document.removeEventListener('click', enableNoSleep, false);
+        noSleep.enable();
+      }, false);
+
+    
 
     // USESTATES
     const [dataDom, setDataDom] = useState([])
@@ -35,6 +45,7 @@ const Nuevohome = () => {
                 </>)
             })
         }
+        
         
     </>)
     

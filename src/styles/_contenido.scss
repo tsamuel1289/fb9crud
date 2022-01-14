@@ -1,6 +1,13 @@
 body {
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'Ubuntu', sans-serif;
 }
+
+.listaDom {
+    
+    text-decoration: none;
+    
+}
+
 .navAbajo {
     background-color: black;
     color: white;
@@ -19,4 +26,10 @@ body {
         margin: auto;
     }
 
+}
+.espacioContenido {
+    pre {
+        font-family: 'Ubuntu', sans-serif;
+        
+    }
 }

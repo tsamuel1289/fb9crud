@@ -39,7 +39,7 @@ const Nuevohome = () => {
         {
             dataDom.map( (ss) => {
                 return(<>    
-                    <Link key={ss.id}  to = {'/contenido'} style={{color: 'black' ,textDecoration: 'none'}}>
+                    <Link key={ss.id}  to = {'/contenido'} className = 'listaDom'>
                         <div  onClick={() => enviarSong(ss.titulo, ss.artista, ss.bpm, ss.url, ss.letra, ss.acordes)}>
                             <b>{ss.titulo}</b><br /><small>{ss.artista}</small><hr />  
                         </div>

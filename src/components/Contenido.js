@@ -17,8 +17,8 @@ const Contenido = () => {
     
     return(<>
         
-       <div>{song.titulo}</div>
-       <div style = {{backgroundColor : "green" , color : "red" , display: "none"}}>{song.artista}</div><hr />
+       <div><b>{song.titulo}</b></div>
+       <div >{song.artista}</div><hr />
         <div style = {{display : videoVis ? 'block' : 'none'}} >
             <iframe width="350" height="50" src={`https://www.youtube.com/embed/${song.url}`}></iframe>
         </div>

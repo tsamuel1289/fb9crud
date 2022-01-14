@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react'
+import ReactPlayer from 'react-player'
+import ReactAudioPlayer from 'react-audio-player'
 
 const Contenido = () => {
     
@@ -19,12 +21,13 @@ const Contenido = () => {
         
        <div><b>{song.titulo}</b></div>
        <div >{song.artista}</div><hr />
-        <div style = {{display : videoVis ? 'block' : 'none'}} >
-            <iframe width="350" height="50" src={`https://www.youtube.com/embed/${song.url}`}></iframe>
-        </div>
-        <audio src="gs://fb9crud.appspot.com/diosdepactos.mp3" />
+       
+        
        <div><pre>{espacioContenido}</pre></div>
 
+        <div className = 'videoEspacio'>
+            <ReactPlayer className = 'videoYT' url={`https://www.youtube.com/watch?v=${song.url}`} height='70px' width='150px' controls= {true} light={true} playing={true} loop={true}/>
+        </div>
 
         <div className = 'navAbajo'>
             <div onClick = {() => setEspacioContenido(song.letra)}>Letra</div>

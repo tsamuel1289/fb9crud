@@ -21,6 +21,7 @@ const Nuevohome = () => {
         if (r) {
 
             son = setInterval(() => play(), 1000)
+            console.log(son)
             change = true
         }else{
             clearInterval(son)

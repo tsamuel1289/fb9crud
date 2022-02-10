@@ -12,6 +12,8 @@ const db = getFirestore(firebaseApp)
 
 const Nuevohome = () => {
 
+    
+
     const [play] = useSound(click1)
 
     let son = null
@@ -72,6 +74,7 @@ const Nuevohome = () => {
                 </>)
             })
         }
+        <button>Prueba WS</button>
 
 
     </>)

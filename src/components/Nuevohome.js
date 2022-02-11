@@ -12,7 +12,18 @@ const db = getFirestore(firebaseApp)
 
 const Nuevohome = () => {
 
+    const ws = new WebSocket('ws://localhost:3000/ws')
     
+    ws.onopen = () => {
+        console.log('conectado a ws')
+    }
+    const sendtows = () => {
+        const data = {
+            name: 'pedro',
+            message: 'hola amigos'
+        }
+        ws.send(console.log('hola hola'))
+    }
 
     const [play] = useSound(click1)
 
@@ -74,7 +85,7 @@ const Nuevohome = () => {
                 </>)
             })
         }
-        <button>Prueba WS</button>
+        <button onClick = {()=> sendtows()}>Prueba WS</button>
 
 
     </>)

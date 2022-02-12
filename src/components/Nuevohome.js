@@ -12,7 +12,7 @@ const db = getFirestore(firebaseApp)
 
 const Nuevohome = () => {
 
-    const ws = new WebSocket('ws://localhost:3000/ws')
+    const ws = new WebSocket('ws://localhost:10000')
     
     ws.onopen = () => {
         console.log('conectado a ws')
